@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUSHOP - Electronics Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        .top-bar {
+            background: #111;
+            color: #eee;
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        .top-bar i {
+            color: #ff9d00;
+            margin-right: 6px;
+        }
+
+        .navbar-main {
+            background: #ff9d00;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 24px;
+            color: #fcfcfc !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-brand i {
+            font-size: 26px;
+        }
+
+        .search-bar input {
+            border-radius: 50px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-bar button {
+            border-radius: 50px;
+            background: #ff9d00;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            transition: 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #e68900;
+        }
+
+        .nav-icons a {
+            color: #444;
+            margin-left: 18px;
+            font-size: 18px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-icons a:hover {
+            color: #fff;
+        }
+
+        .nav-icons .badge {
+            font-size: 11px;
+            padding: 3px 6px;
+        }
+
+        .nav-auth .btn {
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-auth .btn-outline-primary {
+            border: 2px solid #fff;
+            color: #fff;
+            background: transparent;
+        }
+
+        .nav-auth .btn-outline-primary:hover {
+            color: #ff9d00;
+            background: #fff;
+        }
+
+        .nav-auth .btn-primary {
+            background: #fff;
+            color: #ff9d00;
+            border: none;
+        }
+
+        .nav-auth .btn-primary:hover {
+            background: #444;
+            color: #fff;
+        }
+
+        .categories-navbar {
+            background: #fff;
+            border-top: 2px solid #ff9d00;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .categories-navbar .nav-link {
+            color: #444 !important;
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+
+        .categories-navbar .nav-link:hover {
+            color: #fff !important;
+            background: #ff9d00;
+        }
+
+        .categories-navbar .nav-item.active .nav-link {
+            color: #fff !important;
+            background: #ff9d00;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .sidebar h5,
+        .sidebar h6 {
+            font-weight: 700;
+        }
+
+        .sidebar h6 {
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.4s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            min-height: 40px;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff9d00;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            color: #f4c150;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .btn-group-product {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .btn-group-product {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .favorite-btn {
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .favorite-btn.active {
+            background-color: #ff4d4d;
+            color: #fff;
+        }
+
+        .pagination .page-link {
+            color: #ff9d00;
+            border-radius: 8px;
+            margin: 0 3px;
+            font-weight: 600;
+        }
+
+        .pagination .page-link:hover {
+            background: #ff9d00;
+            color: #fff;
+        }
+
+        .recently-viewed h5 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ff9d00;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .footer {
+            background: #222;
+            color: #bbb;
+            padding: 50px 0;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        .footer h6 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .footer a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff9d00;
+        }
+
+        .category-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .category-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .category-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ------------Responsive--------- */
+        @media (max-width: 991px) {
+            .categories-navbar .navbar-nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .categories-navbar .nav-item {
+                flex: 0 0 auto;
+            }
+
+            .search-bar {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+
+            .category-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .category-header p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-card img {
+                height: 150px;
+            }
+
+            .category-header {
+                padding: 40px 0;
+            }
+
+            .category-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <div class="top-bar text-center">
+        <i class="fa fa-truck"></i> Free shipping on orders over $50 &nbsp; | &nbsp;
+        <i class="fa fa-headset"></i> Support: support@youshop.com
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-main">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i> YOUSHOP</a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <div class="mx-auto search-bar my-2 my-lg-0" style="max-width:600px; width:100%;">
+                    <form class="d-flex">
+                        <input class="form-control me-2 py-2" type="search" placeholder="Search products..."
+                            style="font-size:16px;">
+                        <button class="btn px-4 py-2"
+                            style="font-size:16px; background:#ff9d00; color:#fff; border:none;">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="d-flex align-items-center ms-auto">
+                    <div class="d-flex align-items-center">
+                        <div class="nav-icons d-flex align-items-center me-3">
+                            <a href="#" class="position-relative me-2">
+                                <i class="fa fa-heart"></i>
+                                <span
+                                    class="badge bg-danger position-absolute top-0 start-100 translate-middle">3</span>
+                            </a>
+                            <a href="#" class="position-relative">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span
+                                    class="badge bg-danger position-absolute top-0 start-100 translate-middle">5</span>
+                            </a>
+                        </div>
+
+                        <div class="nav-auth d-flex">
+                            <a href="#" class="btn btn-outline-primary me-2">Login</a>
+                            <a href="#" class="btn btn-primary">Sign Up</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg categories-navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="categoriesNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#">Tablets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Laptops</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Smartphones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Headphones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Gaming</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Wearables</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Cameras</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="category-header">
+        <div class="container">
+            <h1>Tablets & iPads</h1>
+            <p>Discover our wide selection of high-performance tablets for work and entertainment. Find the perfect
+                device for your needs with our premium collection.</p>
+        </div>
+    </div>
+
+
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-3 d-none d-md-block">
+                <div class="sidebar">
+                    <h5>Filter by</h5>
+                    <h6>Categories</h6>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" checked> Tablets</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Laptops</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Smartphones</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Accessories</div>
+
+                    <h6>Price</h6>
+                    <input type="range" class="form-range mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>$0</span>
+                        <span>$1000+</span>
+                    </div>
+
+                    <h6>Operating System</h6>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Android</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> iOS</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Windows</div>
+
+                    <h6>Brand</h6>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Apple</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Samsung</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Lenovo</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Huawei</div>
+
+                    <h6>Color</h6>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Black</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> White</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> Silver</div>
+
+                    <h6>Rating</h6>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> 5★</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> 4★ & up</div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox"> 3★ & up</div>
+
+                    <button class="btn btn-warning w-100 mt-3">Apply Filters</button>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-outline-dark d-md-none" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasSidebar">
+                        <i class="fa fa-filter"></i> Filters
+                    </button>
+                    <div class="ms-auto">
+                        <select class="form-select form-select-sm">
+                            <option>Sort by: Popularity</option>
+                            <option>Sort by: Price Low to High</option>
+                            <option>Sort by: Price High to Low</option>
+                            <option>Sort by: Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <span class="discount-badge">-15%</span>
+                            <img src="https://m.media-amazon.com/images/I/61-PblYntsL._AC_SL1500_.jpg" alt="iPad">
+                            <div class="product-title">Apple iPad 10.2" 64GB Wi-Fi</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(128)</span></div>
+                            <div class="product-price">
+                                <span class="old-price">$389.00</span>
+                                <span>$329.00</span>
+                            </div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <img src="https://m.media-amazon.com/images/I/81vDZyJQ-4L._AC_SL1500_.jpg" alt="Lenovo">
+                            <div class="product-title">Lenovo Tab P11 11" 128GB</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(96)</span></div>
+                            <div class="product-price">$229.00</div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <span class="discount-badge">-10%</span>
+                            <img src="https://m.media-amazon.com/images/I/61PkHD6ezLL._AC_SL1500_.jpg"
+                                alt="Samsung Tablet">
+                            <div class="product-title">Samsung Galaxy Tab A8 10.5"</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(142)</span></div>
+                            <div class="product-price">
+                                <span class="old-price">$239.00</span>
+                                <span>$215.00</span>
+                            </div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <img src="https://m.media-amazon.com/images/I/61cwywLZahL._AC_SL1500_.jpg"
+                                alt="Microsoft Surface">
+                            <div class="product-title">Microsoft Surface Go 3</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(87)</span></div>
+                            <div class="product-price">$399.00</div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <span class="discount-badge">-20%</span>
+                            <img src="https://m.media-amazon.com/images/I/61XDeaOrAIL._AC_SL1000_.jpg"
+                                alt="Amazon Fire">
+                            <div class="product-title">Amazon Fire HD 10 Tablet</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(204)</span></div>
+                            <div class="product-price">
+                                <span class="old-price">$149.99</span>
+                                <span>$119.99</span>
+                            </div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <img src="https://m.media-amazon.com/images/I/71pL+8JK+eL._AC_SL1500_.jpg"
+                                alt="Huawei Tablet">
+                            <div class="product-title">Huawei MatePad 11" 128GB</div>
+                            <div class="rating">★★★★☆ <span class="text-muted">(76)</span></div>
+                            <div class="product-price">$349.00</div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <span class="discount-badge">-25%</span>
+                            <img src="https://m.media-amazon.com/images/I/61bM6K+PQ2L._AC_SL1500_.jpg" alt="iPad Air">
+                            <div class="product-title">Apple iPad Air 10.9"</div>
+                            <div class="rating">★★★★★ <span class="text-muted">(189)</span></div>
+                            <div class="product-price">
+                                <span class="old-price">$599.00</span>
+                                <span>$449.00</span>
+                            </div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card">
+                            <img src="https://m.media-amazon.com/images/I/61vDZyJQ-4L._AC_SL1500_.jpg"
+                                alt="Samsung S8">
+                            <div class="product-title">Samsung Galaxy Tab S8</div>
+                            <div class="rating">★★★★★ <span class="text-muted">(132)</span></div>
+                            <div class="product-price">$699.00</div>
+                            <div class="btn-group-product">
+                                <button class="btn btn-warning flex-grow-1"><i class="fa fa-cart-plus me-2"></i>Add to
+                                    Cart</button>
+                                <button class="btn btn-outline-danger favorite-btn"><i
+                                        class="fa fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+
+                <div class="recently-viewed mt-5">
+                    <h5>Recently Viewed</h5>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="product-card">
+                                <img src="https://m.media-amazon.com/images/I/81vDZyJQ-4L._AC_SL1500_.jpg"
+                                    alt="Lenovo">
+                                <div class="product-title">Lenovo Tab P11</div>
+                                <div class="product-price">$229.00</div>
+                                <div class="btn-group-product">
+                                    <button class="btn btn-warning flex-grow-1"><i
+                                            class="fa fa-cart-plus me-2"></i>Add to Cart</button>
+                                    <button class="btn btn-outline-danger favorite-btn"><i
+                                            class="fa fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="product-card">
+                                <img src="https://m.media-amazon.com/images/I/61-PblYntsL._AC_SL1500_.jpg"
+                                    alt="iPad">
+                                <div class="product-title">Apple iPad 10.2</div>
+                                <div class="product-price">$329.00</div>
+                                <div class="btn-group-product">
+                                    <button class="btn btn-warning flex-grow-1"><i
+                                            class="fa fa-cart-plus me-2"></i>Add to Cart</button>
+                                    <button class="btn btn-outline-danger favorite-btn"><i
+                                            class="fa fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-3">
+                    <h6>Contact us</h6>
+                    <p>Email: support@youshop.com</p>
+                    <p>Phone: +1 234 567 8900</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Policies</h6>
+                    <p><a href="#">Shipping & Returns</a></p>
+                    <p><a href="#">Privacy Policy</a></p>
+                    <p><a href="#">Terms of Service</a></p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Blog</a></p>
+                    <p><a href="#">Careers</a></p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Subscribe</h6>
+                    <p>Get updates on sales and special offers</p><input type="email" class="form-control mb-2"
+                        placeholder="Enter email"><button class="btn btn-warning w-100">Subscribe</button>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p>© 2023 YOUSHOP. All rights reserved.</p>
+                    <div class="d-flex justify-content-center gap-3 fs-5">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar">
+        <div class="offcanvas-header">
+            <h5>Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="sidebar">
+                <h6>Categories</h6>
+                <div class="form-check"><input class="form-check-input" type="checkbox" checked> Tablets</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox"> Laptops</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox"> Smartphones</div>
+
+                <h6>Price</h6>
+                <input type="range" class="form-range mb-3">
+
+                <h6>Brand</h6>
+                <div class="form-check"><input class="form-check-input" type="checkbox"> Apple</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox"> Samsung</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox"> Lenovo</div>
+
+                <button class="btn btn-warning w-100 mt-3">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+
+</html>
